@@ -1,0 +1,61 @@
+rpclient:
+  # RPC client'address to access gateway.
+  # daemom is not affected by this config option.
+  # only for other cmd cliends'address to access gateway.
+  # usage format：<protocol>://<ip>:<port>
+  # default: http://127.0.0.1:9091
+  apihost: "http://0.0.0.0:9001"
+  # timeout of RPC request
+  # default: 30s
+  timeout: "180s"
+
+rpcserver:
+  # Listening address for JSON-RPC server
+  # By default, it will be bound to the local loopback address: 127.0.0.1:9001
+  # if need to map outside network you can set [ip]:<port>
+  # which port bound support http/s、websocket（ws）protocols
+  listen: "0.0.0.0:9001"
+
+eth:
+  # eth's chains
+  ethmainnet: 
+    httpurl: https://mainnet.infura.io/v3/4308b9607b5541779f829c7b28f16866
+    wsurl:
+  ethpolygon: 
+    httpurl: https://polygon-mainnet.infura.io/v3/4308b9607b5541779f829c7b28f16866
+    wsurl:
+  ethpolygonmumbai: 
+    httpurl: https://polygon-mumbai.infura.io/v3/4308b9607b5541779f829c7b28f16866
+    wsurl:
+  ethrinkeby: 
+    httpurl: https://rinkeby.infura.io/v3/a64cc9552107441e8a9c6de95692045f
+    wsurl: wss://rinkeby.infura.io/ws/v3/a64cc9552107441e8a9c6de95692045f
+
+ipfs:
+  #endpoint: "https://ipfs.infura.io:5001"
+  endpoint: "http://localhost:5001"
+
+cors:
+  mode: whitelist
+  whitelist:
+  - allow-origin: example1.com
+    allow-methods: GET, POST
+    allow-headers: content-type
+    expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
+      Content-Type
+    allow-credentials: true
+  - allow-origin: example2.com
+    allow-methods: GET, POST
+    allow-headers: content-type
+    expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
+      Content-Type
+    allow-credentials: true
+    
+zap:
+  level: debug
+  format: console
+  director: log
+  showLine: true
+  encode-level: LowercaseColorLevelEncoder
+  stacktrace-key: stacktrace
+  log-in-console: true
