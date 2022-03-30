@@ -37,7 +37,7 @@ The tokenagent app and tokenagent.yaml configuration file are in the same direct
 ```bash
   http JSON-RPC API refer to https://documenter.getpostman.com/view/17454164/UVsTq2KR
 	
-	eth websocket standard API refer to `http://cw.hubwiz.com/card/c/infura-api/1/1/2/
+	eth websocket standard API refer to http://cw.hubwiz.com/card/c/infura-api/1/1/2/
 ```
 
 ### tokenagent.yaml
