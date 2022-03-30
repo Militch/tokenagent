@@ -183,6 +183,7 @@ func (w *WebsocketProxy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	replicateWebsocketConn := func(dst, src *websocket.Conn, errc chan error) {
 		for {
 			msgType, msg, err := src.ReadMessage()
+			global.MARKET_LOG.Debug("ReadMessage", zap.Error(err))
 			if err != nil {
 				m := websocket.FormatCloseMessage(websocket.CloseNormalClosure, fmt.Sprintf("%v", err))
 				if e, ok := err.(*websocket.CloseError); ok {
@@ -202,6 +203,7 @@ func (w *WebsocketProxy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 				break
 			}
 			err = dst.WriteMessage(msgType, msg)
+			global.MARKET_LOG.Debug("WriteMessage", zap.Error(err))
 			if err != nil {
 				errc <- err
 				break

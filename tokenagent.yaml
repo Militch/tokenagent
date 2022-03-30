@@ -56,6 +56,6 @@ zap:
   format: console
   director: log
   showLine: true
-  encode-level: LowercaseColorLevelEncoder
+  encode-level: LowercaseLevelEncoder
   stacktrace-key: stacktrace
   log-in-console: true
