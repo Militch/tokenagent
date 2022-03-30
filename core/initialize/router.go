@@ -16,9 +16,11 @@ func Routers() *gin.Engine {
 	Router.Use(gin.Recovery())
 	Router.Use(middleware.CorsByRules())
 	ipfs := router.RouterGroupApp.IPFSRouter
+	wsproxy := router.RouterGroupApp.WSProxyRouter
 	PublibGroup := Router.Group("")
 	{
 		ipfs.InitIPFSRouter(PublibGroup)
+		wsproxy.WSRouter(PublibGroup)
 	}
 
 	global.MARKET_LOG.Info("router register success")

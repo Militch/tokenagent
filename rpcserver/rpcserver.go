@@ -72,13 +72,13 @@ func NewRPCServer(router *gin.Engine) *RPCServer {
 func (server *RPCServer) Start() error {
 	server.ginEngine.Any("/", func(c *gin.Context) {
 		//handle websocket request
-		if isWebsocketRequest(c) {
-			if err := server.handleWebsocket(c); err != nil {
-				global.MARKET_LOG.Warn("ws connect err")
-			}
-			c.Abort()
-			return
-		}
+		// if isWebsocketRequest(c) {
+		// 	if err := server.handleWebsocket(c); err != nil {
+		// 		global.MARKET_LOG.Warn("ws connect err")
+		// 	}
+		// 	c.Abort()
+		// 	return
+		// }
 		if "POST" != c.Request.Method {
 			httperr(c, 404, errors.New("method not allowed"))
 			return

@@ -23,10 +23,10 @@ eth:
     wsurl:
   ethpolygon: 
     httpurl: https://polygon-mainnet.infura.io/v3/4308b9607b5541779f829c7b28f16866
-    wsurl:
+    wsurl: wss://rpc-mainnet.matic.quiknode.pro
   ethpolygonmumbai: 
-    httpurl: https://polygon-mumbai.infura.io/v3/4308b9607b5541779f829c7b28f16866
-    wsurl:
+    httpurl: https://nd-454-232-011.p2pify.com/6d51099c92d16662778a189b4d0aa0e3
+    wsurl: wss://ws-nd-454-232-011.p2pify.com/6d51099c92d16662778a189b4d0aa0e3
   ethrinkeby: 
     httpurl: https://rinkeby.infura.io/v3/a64cc9552107441e8a9c6de95692045f
     wsurl: wss://rinkeby.infura.io/ws/v3/a64cc9552107441e8a9c6de95692045f
