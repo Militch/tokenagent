@@ -22,7 +22,6 @@ import (
 	"tokenagent/core"
 	"tokenagent/core/backend"
 	"tokenagent/global"
-
 	"github.com/spf13/cobra"
 )
 
@@ -46,7 +45,6 @@ func init() {
 }
 
 func runDaemon() error {
-
 	// 初始化Viper
 	global.MARKET_VP = core.Viper()
 	// 初始化zap日志库

@@ -19,17 +19,17 @@ rpcserver:
 eth:
   # eth's chains
   ethmainnet: 
-    httpurl: 
-    wsurl: 
+    httpurl: https://mainnet.infura.io/v3/761e7e2b770e4245a67660336ce29bfd
+    wsurl: wss://mainnet.infura.io/ws/v3/761e7e2b770e4245a67660336ce29bfd
   ethpolygon: 
-    httpurl: 
-    wsurl: 
+    httpurl: https://polygon-mainnet.infura.io/v3/4308b9607b5541779f829c7b28f16866
+    wsurl: wss://rpc-mainnet.matic.quiknode.pro
   ethpolygonmumbai: 
-    httpurl: 
-    wsurl: 
+    httpurl: https://nd-454-232-011.p2pify.com/6d51099c92d16662778a189b4d0aa0e3
+    wsurl: wss://ws-nd-454-232-011.p2pify.com/6d51099c92d16662778a189b4d0aa0e3
   ethrinkeby: 
-    httpurl: 
-    wsurl: 
+    httpurl: https://rinkeby.infura.io/v3/a64cc9552107441e8a9c6de95692045f
+    wsurl: wss://rinkeby.infura.io/ws/v3/a64cc9552107441e8a9c6de95692045f
 
 ipfs:
   #endpoint: "https://ipfs.infura.io:5001"
@@ -38,7 +38,13 @@ ipfs:
 cors:
   mode: whitelist
   whitelist:
-  - allow-origin: "*"
+  - allow-origin: example1.com
+    allow-methods: GET, POST
+    allow-headers: content-type
+    expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
+      Content-Type
+    allow-credentials: true
+  - allow-origin: example2.com
     allow-methods: GET, POST
     allow-headers: content-type
     expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
@@ -46,7 +52,7 @@ cors:
     allow-credentials: true
     
 zap:
-  level: info
+  level: debug
   format: console
   director: log
   showLine: true

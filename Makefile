@@ -14,7 +14,7 @@ all: build
 
 .PHONY: build
 build: 
-	go build -o $(BINARY) main.go
+	go build -a -o ./build/$(BINARY) .
 
 devtools:
 	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.43.0 1>/dev/null
@@ -27,4 +27,4 @@ test: precheck
 	@echo "Test successful"
 
 clean:
-	$(if $(filter $(OS),Windows_NT), del ${BINARY}, rm -f ${BINARY})
+	$(if $(filter $(OS),Windows_NT), del build\${BINARY}, rm -f build/${BINARY})
