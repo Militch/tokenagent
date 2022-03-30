@@ -138,7 +138,6 @@ func (w *WebsocketProxy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	// opening a new TCP connection time for each request. This should be
 	// optional:
 	// http://tools.ietf.org/html/draft-ietf-hybi-websocket-multiplexing-01
-	fmt.Println(backendURL.String())
 	connBackend, resp, err := dialer.Dial(backendURL.String(), nil)
 	if err != nil {
 		global.MARKET_LOG.Error("websocketproxy: couldn't dial to remote backend url: ", zap.Error(err))
@@ -200,7 +199,6 @@ func (w *WebsocketProxy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 				if m != nil {
 					dst.WriteMessage(websocket.CloseMessage, m)
 				}
-
 				break
 			}
 			err = dst.WriteMessage(msgType, msg)

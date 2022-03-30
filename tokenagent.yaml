@@ -19,8 +19,8 @@ rpcserver:
 eth:
   # eth's chains
   ethmainnet: 
-    httpurl: https://mainnet.infura.io/v3/4308b9607b5541779f829c7b28f16866
-    wsurl:
+    httpurl: https://mainnet.infura.io/v3/761e7e2b770e4245a67660336ce29bfd
+    wsurl: wss://mainnet.infura.io/ws/v3/761e7e2b770e4245a67660336ce29bfd
   ethpolygon: 
     httpurl: https://polygon-mainnet.infura.io/v3/4308b9607b5541779f829c7b28f16866
     wsurl: wss://rpc-mainnet.matic.quiknode.pro
