@@ -1,0 +1,5 @@
+*.md
+*dev.yml
+*dev.yaml
+LICENSE
+Makefile

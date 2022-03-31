@@ -18,9 +18,13 @@ RUN go build -a -o app .
 
 FROM golang:1.18.0-alpine
 
+
 COPY --from=Builder /usr/src/app/app /usr/local/bin
 
 WORKDIR /etc/tokenagent
 COPY tokenagent.yaml ./config.yml
 
-CMD ["app", "daemon", "-C /etc/tokenagent/config.yml"]
+EXPOSE 9001
+ENTRYPOINT [ "app", "daemon" ]
+
+CMD [ "-C", "./config.yml" ]
