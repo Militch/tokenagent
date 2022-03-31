@@ -1,5 +1,6 @@
 PROJECTNAME := tokenagent
 APPNAME := tokenagent
+GOPATH := $(shell go env GOPATH)
 
 ifeq ($(OS),Windows_NT)
 	BINARY_EXT := .exe

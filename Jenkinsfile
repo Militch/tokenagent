@@ -15,6 +15,12 @@ pipeline {
 	    }
 	    steps {
                 updateGitlabCommitStatus name: 'Test', state: 'pending'
+		sh """
+                go version
+                export GOPROXY=https://goproxy.io,direct
+                export GOSUMDB=off
+                make test
+                """
                 updateGitlabCommitStatus name: 'Test', state: 'success'
 	    }
 	}
