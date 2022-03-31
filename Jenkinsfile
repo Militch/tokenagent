@@ -6,9 +6,30 @@ pipeline {
      }
     options {
       gitLabConnection('gitlab')
-      gitlabBuilds( builds : [ ' BuildAndRelease ' ])
     }
     stages {
+	stage('Test'){
+	    when {
+		not { branch 'master' }
+	    }
+	    steps {
+                updateGitlabCommitStatus name: 'Test', state: 'pending'
+		sh """
+                go version
+                export GOPROXY=https://goproxy.io,direct
+                export GOSUMDB=off
+                make test
+                """
+	    }
+	    post {
+                success {
+                    updateGitlabCommitStatus name: 'Test', state: 'success'
+		}
+		failure {
+                    updateGitlabCommitStatus name: 'Test', state: 'failed'
+		}
+	    }
+	}
         stage('BuildAndRelease') {
             when {
                 branch 'master'
@@ -22,9 +43,16 @@ pipeline {
                          "dsyun-aliyun"){
                             dockerImage.push()
                     }
-                    updateGitlabCommitStatus name: 'BuildAndRelease', state: 'success'
                 }
             }
+	    post {
+                success {
+                    updateGitlabCommitStatus name: 'BuildAndRelease', state: 'success'
+		}
+		failure {
+                    updateGitlabCommitStatus name: 'BuildAndRelease', state: 'failed'
+		}
+	    }
         }
     }
 }
