@@ -6,7 +6,6 @@ pipeline {
      }
     options {
       gitLabConnection('gitlab')
-      # gitlabBuilds( builds : [ 'Test', 'BuildAndRelease' ])
     }
     stages {
 	stage('Test'){
