@@ -131,7 +131,7 @@ tokenagent daemon -C example.yml
 1. 该仓库托管于内网 Gitlab 服务，并且采取主分支保护限制，
 故项目成员具有除保护分支以外的推送权限。
 
-2. 分支代码合并到主分支需要提交 `Margin Request` 合并请求。
+2. 分支代码合并到主分支需要提交 Merge Requests（合并请求）。
 
 ### 服务持续集成
 
