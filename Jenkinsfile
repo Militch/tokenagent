@@ -13,6 +13,7 @@ pipeline {
 		not { branch 'master' }
 	    }
 	    steps {
+                updateGitlabCommitStatus name: 'BuildAndRelease', state: 'pending'
 		sh """
                 go version
                 export GOPROXY=https://goproxy.io,direct
@@ -42,9 +43,16 @@ pipeline {
                          "dsyun-aliyun"){
                             dockerImage.push()
                     }
-                    updateGitlabCommitStatus name: 'BuildAndRelease', state: 'success'
                 }
             }
+	    post {
+                success {
+                    updateGitlabCommitStatus name: 'BuildAndRelease', state: 'success'
+		}
+		failure {
+                    updateGitlabCommitStatus name: 'BuildAndRelease', state: 'failed'
+		}
+	    }
         }
     }
 }
