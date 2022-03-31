@@ -1,13 +1,18 @@
-# tokenagent
-Provide multiple chain access services
+# TokenAgent
 
-Currently only the following links are supported:
-```bash
-    ETH_MAINNET
-    ETH_POLYGON
-    ETH_POLYGON_MUMBAI
-    ETH_RINKEBY
-```
+TokenAgent 是一个区块链 NFT 合约构造以及部署服务，
+并且提供多链支持。
+
+当前受支持的区块链：
+
+| 区块链标识 | 描述 |
+| :--- | :--- |
+| ETH_MAINNET        | 以太坊 MAINNET - 主网       |
+| ETH_RINKEBY        | 以太坊 RINKEBY - 测试网      |
+| ETH_GANACHE        | 以太坊 GANACHE - 测试网      |
+| ETH_POLYGON        | 以太坊协议 POLYGON 侧链 - 主网  |
+| ETH_POLYGON_MUMBAI | 以太坊协议 POLYGON 侧链 - 测试网 |
+
 
 ## 安装指引
 
