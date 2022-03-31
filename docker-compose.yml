@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+    daemon:
+        image: registry.cn-hangzhou.aliyuncs.com/dsyun/tokenagent
+        ports:
+          # 端口
+          - "9001:9001"
+        volumes:
+          # 配置文件路径 
+          - "./tokenagent-dev.yaml:/etc/tokenagent/config.yml"

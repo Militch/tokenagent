@@ -14,7 +14,7 @@ TokenAgent 是一个区块链 NFT 合约构造以及部署服务，
 | ETH_POLYGON_MUMBAI | 以太坊协议 POLYGON 侧链 - 测试网 |
 
 
-## 安装指引
+## 部署安装指引
 
 ### 使用 Docker
 
@@ -110,6 +110,36 @@ make
 cp build/tokenagent /usr/local/bin
 ```
 
+### 分布式文件系统安装部署
+
+基于业务特性，开放并提供了基础的文件上传功能。
+服务本身不提供文件存储能力，为兼顾一些特殊的应用场景，
+服务内部代理并提供了文件上传功能，故此需要安装部署分布式文件系统。
+
+> 此功能不推荐在正式环境中使用。应由业务系统根据需求自行提供文件上传服务。
+
+#### IPFS
+
+以下为示例安装步骤，详细安装过程请参阅[IPFS官方文档](https://docs.ipfs.io/install/command-line/)
+
+1. 下载 IPFS 安装程序
+
+```bash
+wget https://dist.ipfs.io/go-ipfs/v0.12.0/go-ipfs_v0.12.0_linux-amd64.tar.gz
+```
+
+2. 解压文件
+
+```bash
+tar -xzvf go-ipfs_v0.12.0_linux-amd64.tar.gz
+```
+
+3. 安装 IPFS
+
+```bash
+cd go-ipfs && sudo bash install.sh
+```
+
 ## 使用指南
 
 执行以下命令快速启动服务
@@ -124,6 +154,8 @@ tokenagent daemon
 ```bash
 tokenagent daemon -C example.yml
 ```
+
+
 
 ## 配置文件参考
 
@@ -146,6 +178,6 @@ tokenagent daemon -C example.yml
 自动化构建流程使用 Jenkins Pipeline 编排，
 具体构建流程脚本定义在 [Jenkinsfile](./Jenkinsfile) 文件中。
 
-> 关于构建流程脚本文档参与 Jenkins 官方文档: 
+> 关于构建流程脚本文档参阅 Jenkins 官方文档: 
 > [https://www.jenkins.io/doc/book/pipeline/](https://www.jenkins.io/doc/book/pipeline/)
 
