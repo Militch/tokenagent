@@ -20,21 +20,25 @@ Currently only the following links are supported:
 docker login --username=<user_name> registry.cn-hangzhou.aliyuncs.com
 ```
 
-登陆私有镜像仓库后，通过以下命令即可下载并运行程序
+登陆私有镜像仓库后，通过以下命令即可下载并运行程序：
 
 ```bash
 docker run --name tokenagent \
--p 9001:9001 
+-p 9001:9001 \
 registry.cn-hangzhou.aliyuncs.com/dsyun/tokenagent
 ```
 
 > 关于 `docker run` 指令参数说明参阅[官方参考手册](https://docs.docker.com/engine/reference/commandline/run/)
 
-以上示例部分参数说明：
+容器内提供了默认的运行时配置文件 (/etc/tokenagent/config.yml)，
+如需自定义配置文件使用 `-v` 参数覆盖替换容器内配置文件：
 
-* -p 9001:9001 该参数将在主机暴露 9001 端口并映射至容器内部 9001 端口
-
-
+```bash
+docker run --name tokenagent \
+-p 9001:9001 \
+-v example.yml:/etc/tokenagent/config.yml \
+registry.cn-hangzhou.aliyuncs.com/dsyun/tokenagent
+```
 
 
 ### Building From Source
