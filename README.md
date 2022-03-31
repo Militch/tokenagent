@@ -131,13 +131,13 @@ cp build/tokenagent /usr/local/bin
 1. 下载 IPFS 安装程序
 
 ```bash
-curl https://dist.ipfs.io/go-ipfs/v0.12.0/go-ipfs_v0.12.0_linux-amd64.tar.gz | tar -xz -C /opt
+curl https://dist.ipfs.io/go-ipfs/v0.12.0/go-ipfs_v0.12.0_linux-amd64.tar.gz | sudo tar -xz -C /opt
 ```
 
 2. 安装至系统目录
 
 ```bash
-ln -s /opt/go-ipfs/ipfs /usr/local/bin
+sudo ln -s /opt/go-ipfs/ipfs /usr/local/bin
 ```
 
 3. 检查安装版本
