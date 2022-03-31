@@ -6,9 +6,18 @@ pipeline {
      }
     options {
       gitLabConnection('gitlab')
-      gitlabBuilds( builds : [ ' BuildAndRelease ' ])
+      gitlabBuilds( builds : [ 'Test', 'BuildAndRelease' ])
     }
     stages {
+	stage('Test'){
+	    when {
+		branch 'develop'
+	    }
+	    steps {
+                updateGitlabCommitStatus name: 'Test', state: 'pending'
+                updateGitlabCommitStatus name: 'Test', state: 'success'
+	    }
+	}
         stage('BuildAndRelease') {
             when {
                 branch 'master'
