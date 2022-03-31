@@ -120,6 +120,10 @@ tokenagent daemon
 tokenagent daemon -C example.yml
 ```
 
+## 配置文件参考
+
+参阅 [tokenagent.yaml](./tokenagent.yaml)
+
 ## 开发指南
 
 ### 代码提交规范
