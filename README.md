@@ -9,7 +9,6 @@ TokenAgent 是一个区块链 NFT 合约构造以及部署服务，
 | :--- | :--- |
 | ETH_MAINNET        | 以太坊 MAINNET - 主网       |
 | ETH_RINKEBY        | 以太坊 RINKEBY - 测试网      |
-| ETH_GANACHE        | 以太坊 GANACHE - 测试网      |
 | ETH_POLYGON        | 以太坊协议 POLYGON 侧链 - 主网  |
 | ETH_POLYGON_MUMBAI | 以太坊协议 POLYGON 侧链 - 测试网 |
 
@@ -41,16 +40,18 @@ registry.cn-hangzhou.aliyuncs.com/dsyun/tokenagent
 ```bash
 docker run --rm --name tokenagent \
 -p 9001:9001 \
--v example.yml:/etc/tokenagent/config.yml \
+-v /example.yml:/etc/tokenagent/config.yml \
 registry.cn-hangzhou.aliyuncs.com/dsyun/tokenagent
 ```
 
 ### 使用 Docker Compose
 
-> 关于 Docker Compose 服务编排工具的安装步骤参阅[官方安装手册](https://docs.docker.com/compose/install/)
+关于 Docker Compose 服务编排工具的安装步骤参阅[官方安装手册](https://docs.docker.com/compose/install/)
 
-本仓库内提供了示例的 [docker-compose.yml](./docker-compose.yml) 文件，
-将文件复制到部署环境内执行以下命令：
+本仓库内提供了示例的 [docker-compose.yml](./docker-compose.yml) 文件。
+
+新建服务目录并将示例 `docker-compose.yml` 文件复制服务目录下。
+执行以下命令快速启动服务：
 
 ```bash
 sudo docker-compose up
