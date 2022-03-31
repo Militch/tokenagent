@@ -59,6 +59,51 @@ docker-compose up -d
 
 > 更多 Docker Compose 使用方法参阅[官方参考手册](https://docs.docker.com/compose/reference/)
 
+### 使用源码编译构建
+
+#### 系统环境准备
+
+使用源码构建时需要安装一些必要的环境依赖，以下列举常见系统的安装步骤：
+
+Debian:
+
+```bash
+sudo apt install build-essential
+```
+
+Golang 环境安装：
+
+```bash
+curl -L https://golang.org/dl/go1.16.4.linux-amd64.tar.gz | sudo tar -xz -C /usr/local
+```
+
+设置系统环境变量
+
+```bash
+echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc && source ~/.bashrc
+```
+
+#### 编译安装
+
+将源码下载到本地环境中：
+
+```bash
+git clone https://git.dsyun.io/tokenagent/tokenagent.gitbash
+```
+
+执行以下命令编译源码：
+
+```bash
+make
+```
+
+编译执行成功后将会在项目根路径下的 ./build 目录中生成可执行文件。
+至此可以将可执行文件移动到系统环境变量指定的目录中，用以提供全局访问。示例：
+
+```bash
+cp build/tokenagent /usr/local/bin
+```
+
 ## 开发指南
 
 ### 代码提交规范
@@ -76,65 +121,6 @@ docker-compose up -d
 自动化构建流程使用 Jenkins Pipeline 编排，
 具体构建流程脚本定义在 [Jenkinsfile](./Jenkinsfile) 文件中。
 
-> 关于构建流程脚本文档参与 Jenkins 官方文档
+> 关于构建流程脚本文档参与 Jenkins 官方文档: 
 > [https://www.jenkins.io/doc/book/pipeline/](https://www.jenkins.io/doc/book/pipeline/)
 
-### Building From Source
-
-To build from source, Go 1.17  must be
-installed on the system. Clone the repo and run
-make:
-```bash
-git clone https://github.com/feiyiban/tokenagent.git
-cd tokenagent && make
-
-windows generate:
-    tokenagent.exe
-linux generate:
-    tokenagent
-```
-start service:
-The tokenagent app and tokenagent.yaml configuration file are in the same directory
-```bash
-    windows:
-    tokenagent.exe daemon
-    linux:
-    tokenagent daemon
-```
-
-### Front end docking interface document address
-### NFT base on openzeppelin
-```bash
-  `http JSON-RPC API refer to https://documenter.getpostman.com/view/17454164/UVsTq2KR`
-	
-	`eth websocket standard API refer to http://cw.hubwiz.com/card/c/infura-api/1/1/2/`
-```
-
-### tokenagent.yaml
-```bash
-  ethmainnet: 
-    httpurl: https://mainnet.infura.io/v3/761e7e2b770e4245a67660336ce29bfd
-    wsurl: wss://mainnet.infura.io/ws/v3/761e7e2b770e4245a67660336ce29bfd
-  ethpolygon: 
-    httpurl: https://polygon-mainnet.infura.io/v3/4308b9607b5541779f829c7b28f16866
-    wsurl: wss://rpc-mainnet.matic.quiknode.pro
-  ethpolygonmumbai: 
-    httpurl: https://nd-454-232-011.p2pify.com/6d51099c92d16662778a189b4d0aa0e3
-    wsurl: wss://ws-nd-454-232-011.p2pify.com/6d51099c92d16662778a189b4d0aa0e3
-  ethrinkeby: 
-    httpurl: https://rinkeby.infura.io/v3/a64cc9552107441e8a9c6de95692045f
-    wsurl: wss://rinkeby.infura.io/ws/v3/a64cc9552107441e8a9c6de95692045f
-
-    httpurl --> JSON-RPC over HTTPs
-    `ethmainnet: https://mainnet.infura.io/v3/761e7e2b770e4245a67660336ce29bfd Corresponding front-end docking dictionary ETH_MAINNET`
-    `ethpolygon: https://polygon-mainnet.infura.io/v3/4308b9607b5541779f829c7b28f16866 Corresponding front-end docking dictionary ETH_POLYGON`
-    `ethpolygonmumbai: https://nd-454-232-011.p2pify.com/6d51099c92d16662778a189b4d0aa0e3 Corresponding front-end docking dictionary ETH_POLYGON_MUMBAI`
-    `ethrinkeby: https://rinkeby.infura.io/v3/a64cc9552107441e8a9c6de95692045f Corresponding front-end docking dictionary ETH_RINKEBY`
-	
-    wsurl -->JSON-RPC over websockets 
-    `ethmainnet: wss://mainnet.infura.io/ws/v3/761e7e2b770e4245a67660336ce29bfd Corresponding front-end ws://localhost:9001/ethmainnet`
-    `ethpolygon: wss://rpc-mainnet.matic.quiknode.pro Corresponding front-end ws://localhost:9001/ethpolygon`
-    `ethpolygonmumbai: wss://ws-nd-454-232-011.p2pify.com/6d51099c92d16662778a189b4d0aa0e3 ws://localhost:9001/ethpolygonmumbai`
-    `ethrinkeby: wss://rinkeby.infura.io/ws/v3/a64cc9552107441e8a9c6de95692045f ws://localhost:9001/ethrinkeby`
-		
-```
