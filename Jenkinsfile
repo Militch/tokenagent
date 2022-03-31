@@ -6,7 +6,7 @@ pipeline {
      }
     options {
       gitLabConnection('gitlab')
-      gitlabBuilds( builds : [ 'Test', 'BuildAndRelease' ])
+      # gitlabBuilds( builds : [ 'Test', 'BuildAndRelease' ])
     }
     stages {
 	stage('Test'){
@@ -14,14 +14,20 @@ pipeline {
 		branch 'develop'
 	    }
 	    steps {
-                updateGitlabCommitStatus name: 'Test', state: 'pending'
 		sh """
                 go version
                 export GOPROXY=https://goproxy.io,direct
                 export GOSUMDB=off
                 make test
                 """
-                updateGitlabCommitStatus name: 'Test', state: 'success'
+	    }
+	    post {
+                success {
+                    updateGitlabCommitStatus name: 'Test', state: 'success'
+		}
+		failure {
+                    updateGitlabCommitStatus name: 'Test', state: 'failed'
+		}
 	    }
 	}
         stage('BuildAndRelease') {
