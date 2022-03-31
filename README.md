@@ -13,7 +13,7 @@ TokenAgent 是一个区块链 NFT 合约构造以及部署服务，
 | ETH_POLYGON_MUMBAI | 以太坊协议 POLYGON 侧链 - 测试网 |
 
 
-## 部署安装指引
+## 安装部署指引
 
 ### 使用 Docker
 
