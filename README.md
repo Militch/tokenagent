@@ -85,10 +85,11 @@ echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc && source ~/.bashrc
 
 #### 编译安装
 
-将源码下载到本地环境中：
+将源码下载到本地环境中, 并切换目录：
 
 ```bash
-git clone https://git.dsyun.io/tokenagent/tokenagent.gitbash
+git clone https://git.dsyun.io/tokenagent/tokenagent.git
+cd tokenagent
 ```
 
 执行以下命令编译源码：
@@ -102,6 +103,21 @@ make
 
 ```bash
 cp build/tokenagent /usr/local/bin
+```
+
+## 使用指南
+
+执行以下命令快速启动服务
+
+```bash
+tokenagent daemon
+```
+
+服务运行时默认使用当前执行路径下的 tokenagent.yaml 文件作为启动配置文件。
+可以通过 -C 参数指定启动配置文件：
+
+```bash
+tokenagent daemon -C example.yml
 ```
 
 ## 开发指南
