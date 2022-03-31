@@ -9,6 +9,34 @@ Currently only the following links are supported:
     ETH_RINKEBY
 ```
 
+## 安装指引
+
+### 使用 Docker
+
+发行版镜像仓库基于阿里云容器镜像服务，并且该发行版镜像属于私有镜像，
+所以在使用 `docker` 部署安装时需要使用账号密码凭证登陆到阿里云镜像仓库。
+
+```bash
+docker login --username=<user_name> registry.cn-hangzhou.aliyuncs.com
+```
+
+登陆私有镜像仓库后，通过以下命令即可下载并运行程序
+
+```bash
+docker run --name tokenagent \
+-p 9001:9001 
+registry.cn-hangzhou.aliyuncs.com/dsyun/tokenagent
+```
+
+> 关于 `docker run` 指令参数说明参阅[官方参考手册](https://docs.docker.com/engine/reference/commandline/run/)
+
+以上示例部分参数说明：
+
+* -p 9001:9001 该参数将在主机暴露 9001 端口并映射至容器内部 9001 端口
+
+
+
+
 ### Building From Source
 
 To build from source, Go 1.17  must be
