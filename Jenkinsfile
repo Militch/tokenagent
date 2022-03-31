@@ -10,7 +10,7 @@ pipeline {
     stages {
 	stage('Test'){
 	    when {
-		branch 'develop'
+		not { branch 'master' }
 	    }
 	    steps {
 		sh """
