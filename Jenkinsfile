@@ -13,7 +13,7 @@ pipeline {
 		not { branch 'master' }
 	    }
 	    steps {
-                updateGitlabCommitStatus name: 'BuildAndRelease', state: 'pending'
+                updateGitlabCommitStatus name: 'Test', state: 'pending'
 		sh """
                 go version
                 export GOPROXY=https://goproxy.io,direct
