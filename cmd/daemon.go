@@ -46,7 +46,7 @@ func init() {
 
 func runDaemon() error {
 	// 初始化Viper
-	global.MARKET_VP = core.Viper()
+	global.MARKET_VP = core.Viper(cfgFile)
 	// 初始化zap日志库
 	global.MARKET_LOG = core.Zap()
 
