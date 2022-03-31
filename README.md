@@ -53,13 +53,19 @@ registry.cn-hangzhou.aliyuncs.com/dsyun/tokenagent
 将文件复制到部署环境内执行以下命令：
 
 ```bash
-docker-compose up
+sudo docker-compose up
 ```
 
 使用 `-d` 参数可以将服务置于后台运行
 
 ```bash
-docker-compose up -d
+sudo docker-compose up -d
+```
+
+使用 `docker-compose` 可以快速更新服务
+
+```bash
+sudo docker-compose pull
 ```
 
 > 更多 Docker Compose 使用方法参阅[官方参考手册](https://docs.docker.com/compose/reference/)
@@ -125,19 +131,19 @@ cp build/tokenagent /usr/local/bin
 1. 下载 IPFS 安装程序
 
 ```bash
-wget https://dist.ipfs.io/go-ipfs/v0.12.0/go-ipfs_v0.12.0_linux-amd64.tar.gz
+curl https://dist.ipfs.io/go-ipfs/v0.12.0/go-ipfs_v0.12.0_linux-amd64.tar.gz | tar -xz -C /opt
 ```
 
-2. 解压文件
+2. 安装至系统目录
 
 ```bash
-tar -xzvf go-ipfs_v0.12.0_linux-amd64.tar.gz
+ln -s /opt/go-ipfs/ipfs /usr/local/bin
 ```
 
-3. 安装 IPFS
+3. 检查安装版本
 
 ```bash
-cd go-ipfs && sudo bash install.sh
+ipfs --version
 ```
 
 ## 使用指南
