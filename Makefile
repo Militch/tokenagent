@@ -21,7 +21,7 @@ devtools:
 	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.43.0 1>/dev/null
 
 precheck: devtools
-	@${GOPATH}/bin/golangci-lint run 1>/dev/null
+	@${GOPATH}/bin/golangci-lint run
 
 test: precheck
 	@go test ./...
