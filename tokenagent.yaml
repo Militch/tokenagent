@@ -1,29 +1,33 @@
+# RPC 网关配置
 rpcserver:
-  # Listening address for JSON-RPC server
-  # By default, it will be bound to the local loopback address: 127.0.0.1:9001
-  # if need to map outside network you can set [ip]:<port>
-  # which port bound support http/s、websocket（ws）protocols
+  # 服务监听地址，默认9001
   listen: "0.0.0.0:9001"
 
+# 以太坊协议 RPC 接口服务
 eth:
-  # eth's chains
-  ethmainnet: 
-    httpurl: 
-    wsurl: 
-  ethpolygon: 
-    httpurl: 
-    wsurl: 
-  ethpolygonmumbai: 
-    httpurl: 
-    wsurl: 
-  ethrinkeby: 
-    httpurl: 
-    wsurl: 
+  # 以太坊主网
+  ethmainnet:
+    httpurl:
+    wsurl:
+  # POLYGON 侧链
+  ethpolygon:
+    httpurl:
+    wsurl:
+  # POLYGON 侧链 - NUMBAI 测试网
+  ethpolygonmumbai:
+    httpurl:
+    wsurl:
+  # 以太坊测试网 - RINKEBY
+  ethrinkeby:
+    httpurl:
+    wsurl:
 
+# IPFS 服务相关配置
 ipfs:
-  #endpoint: "https://ipfs.infura.io:5001"
+  # RPC 网关地址
   endpoint: "http://localhost:5001"
 
+# RPC 跨域配置，固定配置不推荐改动
 cors:
   mode: whitelist
   whitelist:
@@ -33,8 +37,10 @@ cors:
     expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
       Content-Type
     allow-credentials: true
-    
+
+# 日志相关配置
 zap:
+  # 日志级别
   level: info
   format: console
   director: log

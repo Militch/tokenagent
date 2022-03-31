@@ -32,8 +32,7 @@ eth:
     wsurl: wss://rinkeby.infura.io/ws/v3/a64cc9552107441e8a9c6de95692045f
 
 ipfs:
-  #endpoint: "https://ipfs.infura.io:5001"
-  endpoint: "http://localhost:5001"
+  endpoint: "http://192.168.124.13:5001"
 
 cors:
   mode: whitelist
