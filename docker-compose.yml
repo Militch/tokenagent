@@ -3,8 +3,8 @@ services:
     daemon:
         image: registry.cn-hangzhou.aliyuncs.com/dsyun/tokenagent
         ports:
-          # 端口
+          # 端口映射
           - "9001:9001"
-        volumes:
+          # volumes:
           # 配置文件路径 
-          - "./tokenagent-dev.yaml:/etc/tokenagent/config.yml"
+          # - "./tokenagent.yaml:/etc/tokenagent/config.yml"
