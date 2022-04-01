@@ -57,16 +57,22 @@ registry.cn-hangzhou.aliyuncs.com/dsyun/tokenagent
 sudo docker-compose up
 ```
 
-使用 `-d` 参数可以将服务置于后台运行
+使用 `-d` 参数可以将服务置于后台运行。
 
 ```bash
 sudo docker-compose up -d
 ```
 
-使用 `docker-compose` 可以快速更新服务
+使用以下命令可以快速更新服务:
 
 ```bash
 sudo docker-compose pull
+```
+
+查看服务日志。
+
+```bash
+docker-compose logs [-f|-t|--tail="all"]
 ```
 
 > 更多 Docker Compose 使用方法参阅[官方参考手册](https://docs.docker.com/compose/reference/)
