@@ -37,7 +37,11 @@ func (command *ETHCommand) SendRawTransaction(args model.TxRequest) (*model.TxRe
 		return nil, global.NewRPCError(global.InvalidParamsErrorCode, fmt.Sprintf("%v of param `data`", err))
 	}
 
-	chinID, err := chaincli.GetEthClient(args.BlockChain).ChainID(context.Background())
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	chinID, err := cli.ChainID(context.Background())
 	if err != nil {
 		global.MARKET_LOG.Debug("SendRawTransaction->ChainID(): ", zap.Error(err))
 		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v blockchain:`%v`", err.Error(), args.BlockChain))
@@ -61,8 +65,7 @@ func (command *ETHCommand) SendRawTransaction(args model.TxRequest) (*model.TxRe
 		TxHash:          tx.Hash().String(),
 		ContractAddress: contractAddress.Hex(),
 	}
-
-	err = chaincli.GetEthClient(args.BlockChain).RpcCli.CallContext(context.Background(), nil, "eth_sendRawTransaction", args.Data)
+	err = cli.RpcCli.CallContext(context.Background(), nil, "eth_sendRawTransaction", args.Data)
 	if err != nil {
 		global.MARKET_LOG.Debug("SendRawTransaction: ", zap.Error(err))
 		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v blockchain:`%v`", err.Error(), args.BlockChain))
@@ -79,7 +82,11 @@ func (command *ETHCommand) SendRawTransaction(args model.TxRequest) (*model.TxRe
 
 func (command *ETHCommand) GetTransactionReceipt(args model.TxRecRequest) (*model.Receipt, error) {
 	var rec *types.Receipt
-	err := chaincli.GetEthClient(args.BlockChain).RpcCli.CallContext(context.Background(), &rec, "eth_getTransactionReceipt", args.TxHash)
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	err := cli.RpcCli.CallContext(context.Background(), &rec, "eth_getTransactionReceipt", args.TxHash)
 	if err != nil {
 		global.MARKET_LOG.Debug("eth_getTransactionReceipt: ", zap.Error(err))
 		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v blockchain:`%v`", err.Error(), args.BlockChain))

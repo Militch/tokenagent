@@ -7,20 +7,20 @@ rpcserver:
 eth:
   # 以太坊主网
   ethmainnet:
-    httpurl:
-    wsurl:
+    httpurl: 
+    wsurl: 
   # POLYGON 侧链
   ethpolygon:
-    httpurl:
-    wsurl:
+    httpurl: 
+    wsurl: 
   # POLYGON 侧链 - NUMBAI 测试网
   ethpolygonmumbai:
-    httpurl:
-    wsurl:
+    httpurl: 
+    wsurl: 
   # 以太坊测试网 - RINKEBY
   ethrinkeby:
-    httpurl:
-    wsurl:
+    httpurl: 
+    wsurl: 
 
 # IPFS 服务相关配置
 ipfs:
@@ -40,7 +40,7 @@ cors:
 
 # 日志相关配置
 zap:
-  # 日志级别
+  # 日志级别debug->info->warn->erro;default(info)
   level: info
   format: console
   director: log

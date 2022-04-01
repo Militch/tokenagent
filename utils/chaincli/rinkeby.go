@@ -29,7 +29,7 @@ func NewRinkebyClient() *EthClient {
 	cli := &EthClient{}
 	cli.RpcCli, err = rpc.Dial(global.MARKET_CONFIG.Eth.EthRinkeby.HttpUrl)
 	if err != nil {
-		global.MARKET_LOG.Error("ganache client connect err...", zap.Error(err))
+		global.MARKET_LOG.Error("rinkeby client connect err...", zap.Error(err))
 		return nil
 	}
 	cli.Client = ethclient.NewClient(cli.RpcCli)

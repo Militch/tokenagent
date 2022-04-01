@@ -17,9 +17,14 @@ func Zap() (logger *zap.Logger) {
 		fmt.Printf("create %v directory\n", global.MARKET_CONFIG.Zap.Director)
 		_ = os.Mkdir(global.MARKET_CONFIG.Zap.Director, os.ModePerm)
 	}
+
+	// debug->info->warn->error
+
+	cores := []zapcore.Core{}
 	// 调试级别
 	debugPriority := zap.LevelEnablerFunc(func(lev zapcore.Level) bool {
 		return lev == zap.DebugLevel
+
 	})
 	// 日志级别
 	infoPriority := zap.LevelEnablerFunc(func(lev zapcore.Level) bool {
@@ -34,12 +39,27 @@ func Zap() (logger *zap.Logger) {
 		return lev >= zap.ErrorLevel
 	})
 
-	cores := [...]zapcore.Core{
-		getEncoderCore(fmt.Sprintf("./%s/server_debug.log", global.MARKET_CONFIG.Zap.Director), debugPriority),
-		getEncoderCore(fmt.Sprintf("./%s/server_info.log", global.MARKET_CONFIG.Zap.Director), infoPriority),
-		getEncoderCore(fmt.Sprintf("./%s/server_warn.log", global.MARKET_CONFIG.Zap.Director), warnPriority),
-		getEncoderCore(fmt.Sprintf("./%s/server_error.log", global.MARKET_CONFIG.Zap.Director), errorPriority),
+	switch global.MARKET_CONFIG.Zap.Level {
+	case "debug":
+		cores = append(cores, getEncoderCore(fmt.Sprintf("./%s/server_debug.log", global.MARKET_CONFIG.Zap.Director), debugPriority))
+		cores = append(cores, getEncoderCore(fmt.Sprintf("./%s/server_info.log", global.MARKET_CONFIG.Zap.Director), infoPriority))
+		cores = append(cores, getEncoderCore(fmt.Sprintf("./%s/server_warn.log", global.MARKET_CONFIG.Zap.Director), warnPriority))
+		cores = append(cores, getEncoderCore(fmt.Sprintf("./%s/server_error.log", global.MARKET_CONFIG.Zap.Director), errorPriority))
+	case "info":
+		cores = append(cores, getEncoderCore(fmt.Sprintf("./%s/server_info.log", global.MARKET_CONFIG.Zap.Director), infoPriority))
+		cores = append(cores, getEncoderCore(fmt.Sprintf("./%s/server_warn.log", global.MARKET_CONFIG.Zap.Director), warnPriority))
+		cores = append(cores, getEncoderCore(fmt.Sprintf("./%s/server_error.log", global.MARKET_CONFIG.Zap.Director), errorPriority))
+	case "warn":
+		cores = append(cores, getEncoderCore(fmt.Sprintf("./%s/server_warn.log", global.MARKET_CONFIG.Zap.Director), warnPriority))
+		cores = append(cores, getEncoderCore(fmt.Sprintf("./%s/server_error.log", global.MARKET_CONFIG.Zap.Director), errorPriority))
+	case "error":
+		cores = append(cores, getEncoderCore(fmt.Sprintf("./%s/server_error.log", global.MARKET_CONFIG.Zap.Director), errorPriority))
+	default:
+		cores = append(cores, getEncoderCore(fmt.Sprintf("./%s/server_info.log", global.MARKET_CONFIG.Zap.Director), infoPriority))
+		cores = append(cores, getEncoderCore(fmt.Sprintf("./%s/server_warn.log", global.MARKET_CONFIG.Zap.Director), warnPriority))
+		cores = append(cores, getEncoderCore(fmt.Sprintf("./%s/server_error.log", global.MARKET_CONFIG.Zap.Director), errorPriority))
 	}
+
 	logger = zap.New(zapcore.NewTee(cores[:]...), zap.AddCaller())
 
 	if global.MARKET_CONFIG.Zap.ShowLine {
