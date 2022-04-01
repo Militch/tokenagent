@@ -72,7 +72,7 @@ sudo docker-compose pull
 查看服务日志。
 
 ```bash
-docker-compose logs [-f|-t|--tail="all"]
+sudo docker-compose logs [-f|-t|--tail="all"]
 ```
 
 > 更多 Docker Compose 使用方法参阅[官方参考手册](https://docs.docker.com/compose/reference/)
@@ -120,7 +120,7 @@ make
 至此可以将可执行文件移动到系统环境变量指定的目录中，用以提供全局访问。示例：
 
 ```bash
-cp build/tokenagent /usr/local/bin
+sudo cp build/tokenagent /usr/local/bin
 ```
 
 ### 分布式文件系统安装部署
