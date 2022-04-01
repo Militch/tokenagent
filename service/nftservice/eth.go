@@ -46,7 +46,11 @@ func (nft *ETHNft) NftPreMintCreate(args model.NftPreMintRequest) (*model.Contra
 		To:   &to,
 		Data: packed,
 	}
-	txPre, err := chaincli.GetEthClient(args.BlockChain).TxPreExtra(msg)
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	txPre, err := cli.TxPreExtra(msg)
 	if err != nil {
 		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
 	}
@@ -85,7 +89,11 @@ func (nft *ETHNft) NftPreApproveCreate(args model.NftPreApproveRequest) (*model.
 		To:   &to,
 		Data: packed,
 	}
-	txPre, err := chaincli.GetEthClient(args.BlockChain).TxPreExtra(msg)
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	txPre, err := cli.TxPreExtra(msg)
 	if err != nil {
 		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
 	}
@@ -125,7 +133,11 @@ func (nft *ETHNft) NftPreBurnCreate(args model.NftPreBurnRequest) (*model.Contra
 		To:   &to,
 		Data: packed,
 	}
-	txPre, err := chaincli.GetEthClient(args.BlockChain).TxPreExtra(msg)
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	txPre, err := cli.TxPreExtra(msg)
 	if err != nil {
 		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
 	}
@@ -189,7 +201,11 @@ func (nft *ETHNft) NftPreTransferFromCreate(args model.NftPreTransferFromRequest
 		To:   &to,
 		Data: packed,
 	}
-	txPre, err := chaincli.GetEthClient(args.BlockChain).TxPreExtra(msg)
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	txPre, err := cli.TxPreExtra(msg)
 	if err != nil {
 		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
 	}
@@ -230,7 +246,11 @@ func (nft *ETHNft) NftPreSafeTransferFromCreate(args model.NftPreTransferFromReq
 		To:   &to,
 		Data: packed,
 	}
-	txPre, err := chaincli.GetEthClient(args.BlockChain).TxPreExtra(msg)
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	txPre, err := cli.TxPreExtra(msg)
 	if err != nil {
 		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
 	}
@@ -271,7 +291,11 @@ func (nft *ETHNft) NftPreSafeTransferFromExCreate(args model.NftPreTransferFromR
 		To:   &to,
 		Data: packed,
 	}
-	txPre, err := chaincli.GetEthClient(args.BlockChain).TxPreExtra(msg)
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	txPre, err := cli.TxPreExtra(msg)
 	if err != nil {
 		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
 	}
@@ -314,8 +338,12 @@ func (nft *ETHNft) NftPreTransferOwnershipCreate(args model.NftPreTransferOwners
 //@param: args ethmodel.NftOwnerOfRequest
 //@return: string
 func (nft *ETHNft) OwnerOf(args model.NftOwnerOfRequest) (string, error) {
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return "", global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
 	contractAddress := common.HexToAddress(args.ContractAddress)
-	nftToken, err := erc721.NewNftcontract(contractAddress, chaincli.GetEthClient(args.BlockChain).Client)
+	nftToken, err := erc721.NewNftcontract(contractAddress, cli.Client)
 	if err != nil {
 		global.MARKET_LOG.Debug("Failed to NewContracts: %v", zap.Error(err))
 		return "", global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
@@ -340,8 +368,12 @@ func (nft *ETHNft) OwnerOf(args model.NftOwnerOfRequest) (string, error) {
 //@param: args ethmodel.NftBalanceOfRequest
 //@return: uint64
 func (nft *ETHNft) BalanceOf(args model.NftBalanceOfRequest) (uint64, error) {
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return 0, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
 	contractAddress := common.HexToAddress(args.ContractAddress)
-	nftToken, err := erc721.NewNftcontract(contractAddress, chaincli.GetEthClient(args.BlockChain).Client)
+	nftToken, err := erc721.NewNftcontract(contractAddress, cli.Client)
 	if err != nil {
 		global.MARKET_LOG.Debug("Failed to NewContracts: %v", zap.Error(err))
 		return uint64(0), global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
@@ -361,8 +393,12 @@ func (nft *ETHNft) BalanceOf(args model.NftBalanceOfRequest) (uint64, error) {
 //@param: args ethmodel.NftTokenUriRequest
 //@return: string
 func (nft *ETHNft) TokenUri(args model.NftTokenInfoRequest) (string, error) {
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return "", global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
 	contractAddress := common.HexToAddress(args.ContractAddress)
-	nftToken, err := erc721.NewNftcontract(contractAddress, chaincli.GetEthClient(args.BlockChain).Client)
+	nftToken, err := erc721.NewNftcontract(contractAddress, cli.Client)
 	if err != nil {
 		global.MARKET_LOG.Debug("Failed to NewContracts: %v", zap.Error(err))
 		return "", global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
@@ -386,8 +422,12 @@ func (nft *ETHNft) TokenUri(args model.NftTokenInfoRequest) (string, error) {
 //@param: args ethmodel.NftTokenUriRequest
 //@return: string
 func (nft *ETHNft) GetApproved(args model.NftTokenInfoRequest) (string, error) {
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return "", global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
 	contractAddress := common.HexToAddress(args.ContractAddress)
-	nftToken, err := erc721.NewNftcontract(contractAddress, chaincli.GetEthClient(args.BlockChain).Client)
+	nftToken, err := erc721.NewNftcontract(contractAddress, cli.Client)
 	if err != nil {
 		global.MARKET_LOG.Debug("Failed to NewContracts: %v", zap.Error(err))
 		return "", global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))

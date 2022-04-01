@@ -112,7 +112,7 @@ func (server *RPCServer) Start() error {
 	if err != nil {
 		return err
 	}
-	global.MARKET_LOG.Info("RPC Service listen on: %s", zap.String("address", ln.Addr().String()))
+	global.MARKET_LOG.Info("RPC Service listen on: ", zap.String("address", ln.Addr().String()))
 	return server.ginEngine.RunListener(ln)
 }
 
@@ -152,7 +152,7 @@ func (server *RPCServer) jsonRPCCall(data []byte, rpcId **int, w io.Writer) erro
 		global.MARKET_LOG.Debug(rpcObj.method, zap.Error(err))
 		return err
 	}
-	global.MARKET_LOG.Debug(rpcObj.method, zap.Any("Request-->Body", jsonObjMap))
+	global.MARKET_LOG.Info(rpcObj.method, zap.Any("Request-->Body", jsonObjMap))
 	*rpcId = *&rpcObj.id
 	s, t, err := server.getServiceAndMethodType(rpcObj.method)
 	if err != nil {

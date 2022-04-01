@@ -47,7 +47,13 @@ func (collection *ETHCollection) CollectionPreCreate(args model.CollectionPreCre
 		From: common.HexToAddress(args.FromAddress),
 		Data: data,
 	}
-	txPre, err := chaincli.GetEthClient(args.BlockChain).TxPreExtra(msg)
+
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+
+	txPre, err := cli.TxPreExtra(msg)
 	if err != nil {
 		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
 	}
@@ -83,7 +89,11 @@ func (collection *ETHCollection) CollectionPreSetContractURICreate(args model.Co
 		To:   &to,
 		Data: packed,
 	}
-	txPre, err := chaincli.GetEthClient(args.BlockChain).TxPreExtra(msg)
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	txPre, err := cli.TxPreExtra(msg)
 	if err != nil {
 		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
 	}
@@ -119,7 +129,11 @@ func (collection *ETHCollection) CollectionPreSetTokenURIPrefixCreate(args model
 		To:   &to,
 		Data: packed,
 	}
-	txPre, err := chaincli.GetEthClient(args.BlockChain).TxPreExtra(msg)
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	txPre, err := cli.TxPreExtra(msg)
 	if err != nil {
 		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
 	}
@@ -139,7 +153,11 @@ func (collection *ETHCollection) CollectionPreSetTokenURIPrefixCreate(args model
 //@return: *ethmodel.CollectionNameResponse
 func (collection *ETHCollection) Name(args model.CollectionRequest) (string, error) {
 	contractAddress := common.HexToAddress(args.ContractAddress)
-	nft721, err := erc721.NewNftcontract(contractAddress, chaincli.GetEthClient(args.BlockChain))
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return "", global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	nft721, err := erc721.NewNftcontract(contractAddress, cli)
 	if err != nil {
 		global.MARKET_LOG.Debug("Failed to NewContracts:", zap.Error(err))
 		return "", global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
@@ -160,7 +178,11 @@ func (collection *ETHCollection) Name(args model.CollectionRequest) (string, err
 //@return: *ethmodel.CollectionTokenURIPrefixResponse
 func (collection *ETHCollection) TokenURIPrefix(args model.CollectionRequest) (string, error) {
 	contractAddress := common.HexToAddress(args.ContractAddress)
-	nft721, err := erc721.NewNftcontract(contractAddress, chaincli.GetEthClient(args.BlockChain))
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return "", global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	nft721, err := erc721.NewNftcontract(contractAddress, cli)
 	if err != nil {
 		global.MARKET_LOG.Debug("Failed to NewContracts: ", zap.Error(err))
 		return "", global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
@@ -181,7 +203,11 @@ func (collection *ETHCollection) TokenURIPrefix(args model.CollectionRequest) (s
 //@return: *ethmodel.CollectionOwnerResponse
 func (collection *ETHCollection) Owner(args model.CollectionRequest) (string, error) {
 	contractAddress := common.HexToAddress(args.ContractAddress)
-	nft721, err := erc721.NewNftcontract(contractAddress, chaincli.GetEthClient(args.BlockChain))
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return "", global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	nft721, err := erc721.NewNftcontract(contractAddress, cli)
 	if err != nil {
 		global.MARKET_LOG.Debug("Failed to NewContracts: ", zap.Error(err))
 		return "", global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
@@ -202,7 +228,11 @@ func (collection *ETHCollection) Owner(args model.CollectionRequest) (string, er
 //@return: *ethmodel.CollectionNameResponse
 func (collection *ETHCollection) Symbol(args model.CollectionRequest) (string, error) {
 	contractAddress := common.HexToAddress(args.ContractAddress)
-	nft721, err := erc721.NewNftcontract(contractAddress, chaincli.GetEthClient(args.BlockChain))
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return "", global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	nft721, err := erc721.NewNftcontract(contractAddress, cli)
 	if err != nil {
 		global.MARKET_LOG.Debug("Failed to NewContracts: ", zap.Error(err))
 		return "", global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
@@ -223,7 +253,11 @@ func (collection *ETHCollection) Symbol(args model.CollectionRequest) (string, e
 //@return: *ethmodel.CollectionTotalSupplyResponse
 func (collection *ETHCollection) TotalSupply(args model.CollectionRequest) (uint64, error) {
 	contractAddress := common.HexToAddress(args.ContractAddress)
-	nftToken, err := erc721.NewNftcontract(contractAddress, chaincli.GetEthClient(args.BlockChain))
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return 0, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	nftToken, err := erc721.NewNftcontract(contractAddress, cli)
 	if err != nil {
 		global.MARKET_LOG.Debug("Failed to NewNft721: %v", zap.Error(err))
 		return uint64(0), global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
@@ -240,12 +274,16 @@ func (collection *ETHCollection) TotalSupply(args model.CollectionRequest) (uint
 // 通过私钥部署合约
 func (collection *ETHCollection) CollectionCreateWithPrikey(args model.CollectionCreateWithPrikeyRequest) (*model.TxResponse, error) {
 	// 签名
-	nonce, err := chaincli.GetEthClient(args.BlockChain).NonceAt(context.Background(), common.HexToAddress(args.From), nil)
+	cli := chaincli.GetEthClient(args.BlockChain)
+	if cli == nil {
+		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+	}
+	nonce, err := cli.NonceAt(context.Background(), common.HexToAddress(args.From), nil)
 	if err != nil {
 		global.MARKET_LOG.Debug("Failed to NonceAt: %v", zap.Error(err))
 		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
 	}
-	gasPrice, err := chaincli.GetEthClient(args.BlockChain).SuggestGasPrice(context.Background())
+	gasPrice, err := cli.SuggestGasPrice(context.Background())
 	if err != nil {
 		global.MARKET_LOG.Debug("Failed to SuggestGasPrice: %v", zap.Error(err))
 		return nil, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
@@ -265,7 +303,7 @@ func (collection *ETHCollection) CollectionCreateWithPrikey(args model.Collectio
 			return tx.WithSignature(signer, signature)
 		},
 	}
-	contractAddress, tx, _, err := erc721.DeployNftcontract(auth, chaincli.GetEthClient(args.BlockChain), args.Name, args.Symbol, args.TokenURIPrefix)
+	contractAddress, tx, _, err := erc721.DeployNftcontract(auth, cli, args.Name, args.Symbol, args.TokenURIPrefix)
 	if err != nil {
 		global.MARKET_LOG.Debug("Failed to DeployContracts: %v", zap.Error(err))
 		return nil, err
