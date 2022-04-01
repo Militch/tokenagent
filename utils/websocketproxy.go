@@ -198,8 +198,10 @@ func (w *WebsocketProxy) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 				}
 				errc <- err
 				if m != nil {
-					dst.WriteMessage(websocket.CloseMessage, m)
+					err = dst.WriteMessage(websocket.CloseMessage, m)
+					errc <- err
 				}
+				
 				break
 			}
 			err = dst.WriteMessage(msgType, msg)
