@@ -1,6 +1,7 @@
 package collectionapi
 
 import (
+	"math/big"
 	"tokenagent/model/model"
 	"tokenagent/service"
 )
@@ -103,7 +104,7 @@ func (handler *CollectionAPIHandler) Owner(args model.CollectionRequest, resp *s
 //@param: args model.CollectionRequest
 //@return:  resp *uint64
 
-func (handler *CollectionAPIHandler) TotalSupply(args model.CollectionRequest, resp *uint64) error {
+func (handler *CollectionAPIHandler) TotalSupply(args model.CollectionRequest, resp **big.Int) error {
 	response, err := service.ServiceGroupApp.CollectionProxy.TotalSupply(args)
 	if err != nil {
 		return err

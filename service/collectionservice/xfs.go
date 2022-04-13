@@ -1,6 +1,7 @@
 package collectionservice
 
 import (
+	"math/big"
 	"tokenagent/model/model"
 )
 
@@ -36,8 +37,8 @@ func (collection *XFSCollection) Owner(args model.CollectionRequest) (string, er
 	return "", nil
 }
 
-func (collection *XFSCollection) TotalSupply(args model.CollectionRequest) (uint64, error) {
-	return uint64(0), nil
+func (collection *XFSCollection) TotalSupply(args model.CollectionRequest) (*big.Int, error) {
+	return *new(*big.Int), nil
 }
 
 func (collection *XFSCollection) CollectionCreateWithPrikey(args model.CollectionCreateWithPrikeyRequest) (*model.TxResponse, error) {

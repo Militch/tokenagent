@@ -25,6 +25,7 @@ func (backend *Backend) RegisterBackend() error {
 	rpc := &api.ApiGroupApp.ChainApi
 	collection := &api.ApiGroupApp.CollectionApi
 	nft := &api.ApiGroupApp.NftApi
+	token := &api.ApiGroupApp.TokenApi
 
 	if err := backend.rpcServer.RegisterName("Collection", collection); err != nil {
 		global.MARKET_LOG.Error("", zap.Error(err))
@@ -35,6 +36,10 @@ func (backend *Backend) RegisterBackend() error {
 		return err
 	}
 	if err := backend.rpcServer.RegisterName("NFT", nft); err != nil {
+		global.MARKET_LOG.Error("", zap.Error(err))
+		return err
+	}
+	if err := backend.rpcServer.RegisterName("Token", token); err != nil {
 		global.MARKET_LOG.Error("", zap.Error(err))
 		return err
 	}

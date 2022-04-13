@@ -5,3 +5,9 @@ type TxPreExtra struct {
 	GasLimit uint64 `json:"gas_limit"`
 	Nonce    uint64 `json:"nonce"`
 }
+
+// Contract PreCreate Response
+type ContractCodeResponse struct {
+	TxPreExtra
+	Code string `json:"code"`
+}

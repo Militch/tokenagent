@@ -2,6 +2,7 @@ package collectionservice
 
 import (
 	"fmt"
+	"math/big"
 	"tokenagent/global"
 	"tokenagent/model/model"
 	"tokenagent/utils"
@@ -21,7 +22,7 @@ type Collection interface {
 	// 获取合集的拥有者，直接调用无需签名
 	Owner(args model.CollectionRequest) (string, error)
 	// 获取合集下Token的总额，直接调用无需签名
-	TotalSupply(args model.CollectionRequest) (uint64, error)
+	TotalSupply(args model.CollectionRequest) (*big.Int, error)
 	// 前端将私钥发过来，直接签名交易上链
 	CollectionCreateWithPrikey(args model.CollectionCreateWithPrikeyRequest) (*model.TxResponse, error)
 }
@@ -143,15 +144,15 @@ func (proxy *CollectionProxy) Owner(args model.CollectionRequest) (string, error
 //@description: 根据前端请求的BlockChain切换到相应链，处理RPC请求
 //@param: args model.CollectionRequest
 //@return: uint64
-func (proxy *CollectionProxy) TotalSupply(args model.CollectionRequest) (uint64, error) {
+func (proxy *CollectionProxy) TotalSupply(args model.CollectionRequest) (*big.Int, error) {
 	cli := getCollectionProxyInstance(args.BlockChain)
 	bExit := utils.IsNil(cli)
 	if bExit {
-		return uint64(0), global.NewRPCError(global.InvalidParamsErrorCode, fmt.Sprintf("blockchain:`%v` is invalid", args.BlockChain))
+		return *new(*big.Int), global.NewRPCError(global.InvalidParamsErrorCode, fmt.Sprintf("blockchain:`%v` is invalid", args.BlockChain))
 	}
 	response, err := cli.TotalSupply(args)
 	if err != nil {
-		return uint64(0), err
+		return *new(*big.Int), err
 	}
 	return response, nil
 }
