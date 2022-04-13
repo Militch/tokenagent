@@ -35,7 +35,7 @@ func (eth *EthClient) TxPreExtra(msg ethereum.CallMsg) (*model.TxPreExtra, error
 	gas, err := eth.EstimateGas(context.Background(), msg)
 	if err != nil {
 		global.MARKET_LOG.Debug("TxPreExtra->EstimateGas", zap.Error(err))
-		gas = 210000
+		return nil, err
 	}
 	response := &model.TxPreExtra{
 		GasPrice: gasPrice.Uint64(),

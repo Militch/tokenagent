@@ -21,12 +21,6 @@ type CollectionCreateWithPrikeyRequest struct {
 	Prikey         string `json:"prikey"`
 }
 
-// Collection PreCreate Response
-type ContractCodeResponse struct {
-	TxPreExtra
-	Code string `json:"code"`
-}
-
 // ERC721合集的基本信息请求
 type CollectionRequest struct {
 	BlockChain      string `json:"blockchain"`

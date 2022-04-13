@@ -251,24 +251,24 @@ func (collection *ETHCollection) Symbol(args model.CollectionRequest) (string, e
 //@description: Call调用返回NFTToken的总量，不上链不用进行签名
 //@param: args ethmodel.CollectionRequest
 //@return: *ethmodel.CollectionTotalSupplyResponse
-func (collection *ETHCollection) TotalSupply(args model.CollectionRequest) (uint64, error) {
+func (collection *ETHCollection) TotalSupply(args model.CollectionRequest) (*big.Int, error) {
 	contractAddress := common.HexToAddress(args.ContractAddress)
 	cli := chaincli.GetEthClient(args.BlockChain)
 	if cli == nil {
-		return 0, global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
+		return *new(*big.Int), global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("blockchain:`%v` No connection established in service", args.BlockChain))
 	}
 	nftToken, err := erc721.NewNftcontract(contractAddress, cli)
 	if err != nil {
 		global.MARKET_LOG.Debug("Failed to NewNft721: %v", zap.Error(err))
-		return uint64(0), global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
+		return *new(*big.Int), global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
 	}
 	totalsupply, err := nftToken.TotalSupply(nil)
 	if err != nil {
 		global.MARKET_LOG.Debug("Failed to TotalSupply: %v", zap.Error(err))
-		return uint64(0), global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
+		return *new(*big.Int), global.NewRPCError(global.InternalErrorCode, fmt.Sprintf("%v on the %v Chain", err.Error(), args.BlockChain))
 	}
 
-	return totalsupply.Uint64(), nil
+	return totalsupply, nil
 }
 
 // 通过私钥部署合约
